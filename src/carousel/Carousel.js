@@ -67,7 +67,17 @@ export default class Carousel extends Component {
         useScrollView: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
         vertical: PropTypes.bool,
         onBeforeSnapToItem: PropTypes.func,
-        onSnapToItem: PropTypes.func
+        onSnapToItem: PropTypes.func,
+        onScroll: PropTypes.func,
+        onStartShouldSetResponderCapture: PropTypes.func,
+        onTouchStart: PropTypes.func,
+        onTouchEnd: PropTypes.func,
+        onScrollBeginDrag: PropTypes.func,
+        onScrollEndDrag: PropTypes.func,
+        onMomentumScrollEnd: PropTypes.func,
+        onLayout: PropTypes.func,
+        keyExtractor: PropTypes.func,
+        style: PropTypes.any
     };
 
     static defaultProps = {
@@ -818,11 +828,11 @@ export default class Carousel extends Component {
         }
 
         if (nextActiveItem === this._itemToSnapTo &&
-            scrollOffset === this._scrollOffsetRef) {
+            Math.abs(scrollOffset - this._scrollOffsetRef) <= 1.0) {
             this._repositionScroll(nextActiveItem);
         }
 
-        if (typeof onScroll === "function" && event) {
+        if (typeof onScroll === 'function' && event) {
             onScroll(event);
         }
     }
